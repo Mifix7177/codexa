@@ -146,6 +146,17 @@ export default function MouseBackground() {
         ctx.fill()
       }
 
+      // Update glass-card local coordinates for border glow
+      const cards = document.querySelectorAll('.glass-card')
+      const screenMy = my - scrollY
+      for (let i = 0; i < cards.length; i++) {
+        const rect = cards[i].getBoundingClientRect()
+        const x = mx - rect.left
+        const y = screenMy - rect.top
+        cards[i].style.setProperty('--mouse-x', `${x}px`)
+        cards[i].style.setProperty('--mouse-y', `${y}px`)
+      }
+
       // Soft glow at cursor
       if (mx > -500) {
         const screenMy = my - scrollY
