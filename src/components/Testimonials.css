@@ -1,0 +1,98 @@
+.test__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+
+.test__desc {
+  font-size: var(--fs-body);
+  max-width: 520px;
+  line-height: var(--lh-relaxed);
+}
+
+/* Infinite marquee */
+.test__marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.test__track {
+  display: flex;
+  gap: var(--space-xl);
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.test__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Card */
+.test__card {
+  flex-shrink: 0;
+  width: 380px;
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.test__card-stars {
+  display: flex;
+  gap: 2px;
+  color: #f59e0b;
+}
+
+.test__card-text {
+  font-size: var(--fs-body);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  font-style: italic;
+  flex-grow: 1;
+}
+
+.test__card-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: auto;
+}
+
+.test__card-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  flex-shrink: 0;
+}
+
+.test__card-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+}
+
+.test__card-role {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 768px) {
+  .test__card {
+    width: 300px;
+    padding: var(--space-xl);
+  }
+}

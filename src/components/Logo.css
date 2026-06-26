@@ -1,0 +1,32 @@
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.brand-logo__text {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: var(--fw-bold);
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.brand-logo__x {
+  color: var(--accent-secondary);
+}
+
+.brand-logo__icon {
+  height: 32px;
+  width: auto;
+}
+
+.brand-name {
+  font-weight: inherit;
+  color: inherit;
+}
+
+.brand-name__x {
+  color: var(--accent-secondary);
+}

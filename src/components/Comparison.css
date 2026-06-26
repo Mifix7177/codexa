@@ -1,0 +1,120 @@
+.cmp__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-4xl);
+}
+
+.cmp__desc {
+  font-size: var(--fs-body);
+  max-width: 480px;
+  line-height: var(--lh-relaxed);
+}
+
+.cmp__table {
+  overflow: hidden;
+  padding: 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cmp__row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cmp__row:last-child {
+  border-bottom: none;
+}
+
+.cmp__row--header {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cmp__cell {
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--fs-small);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  position: relative;
+}
+
+.cmp__row--header .cmp__cell {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: var(--space-md) var(--space-xl);
+}
+
+.cmp__cell--feature {
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+.cmp__cell--trad {
+  color: var(--text-tertiary);
+}
+
+.cmp__cell--codexa {
+  color: var(--text-primary);
+  font-weight: var(--fw-medium);
+}
+
+.cmp__icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+.cmp__icon--bad {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.cmp__icon--good {
+  background: rgba(79, 125, 245, 0.15);
+  color: var(--accent-blue);
+}
+
+.cmp__highlight {
+  position: absolute;
+  inset: 0;
+  background: rgba(79, 125, 245, 0.03);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .cmp__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .cmp__cell {
+    padding: var(--space-sm) var(--space-lg);
+  }
+  .cmp__cell--feature {
+    padding-top: var(--space-lg);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .cmp__cell--codexa {
+    padding-bottom: var(--space-lg);
+  }
+  .cmp__row--header {
+    display: none;
+  }
+}

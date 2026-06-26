@@ -1,0 +1,112 @@
+.biz {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.biz__header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.biz__title {
+  max-width: 700px;
+}
+
+.biz__subtitle {
+  font-size: var(--fs-body);
+  max-width: 520px;
+  line-height: var(--lh-relaxed);
+}
+
+.biz__track {
+  display: flex;
+  will-change: transform;
+}
+
+.biz__cards {
+  display: flex;
+  gap: var(--space-xl);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  padding-right: 40vw;
+}
+
+.biz__card {
+  flex-shrink: 0;
+  width: 320px;
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  will-change: transform;
+}
+
+.biz__card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, var(--card-accent), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.biz__card:hover .biz__card-glow {
+  opacity: 0.06;
+}
+
+.biz__card-number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  letter-spacing: var(--ls-wider);
+}
+
+.biz__card-icon {
+  font-size: 2.5rem;
+  margin: var(--space-sm) 0;
+}
+
+.biz__card-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+}
+
+.biz__card-desc {
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+.biz__card-line {
+  width: 40px;
+  height: 2px;
+  background: var(--card-accent);
+  border-radius: var(--radius-full);
+  margin-top: auto;
+  opacity: 0.5;
+  transition: width var(--duration-normal) var(--ease-out-quart), opacity var(--duration-normal);
+}
+
+.biz__card:hover .biz__card-line {
+  width: 60px;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .biz__card {
+    width: 280px;
+    padding: var(--space-xl);
+  }
+}
