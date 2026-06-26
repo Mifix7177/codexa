@@ -14,7 +14,22 @@ export default function CTA() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.cta__content > *', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 80%' } })
+      // Content — blur + slide up
+      gsap.fromTo('.cta__content > *', 
+        { opacity: 0, y: 60, filter: 'blur(12px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 80%' } }
+      )
+
+      // Orbs — parallax on scroll
+      gsap.to('.cta__orb--1', {
+        y: -80, x: 30, ease: 'none',
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true }
+      })
+      gsap.to('.cta__orb--2', {
+        y: 60, x: -40, ease: 'none',
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true }
+      })
     }, section)
     return () => ctx.revert()
   }, [])

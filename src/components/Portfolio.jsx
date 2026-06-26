@@ -28,7 +28,19 @@ export default function Portfolio() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.port__header > *', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%' } })
+      // Header — blur reveal
+      gsap.fromTo('.port__header > *', 
+        { opacity: 0, y: 70, filter: 'blur(10px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 78%' } }
+      )
+
+      // Filter buttons — stagger from left with scale bounce
+      gsap.fromTo('.port__filter', 
+        { opacity: 0, scale: 0.8, y: 20 }, 
+        { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.05, ease: 'back.out(1.7)', 
+          scrollTrigger: { trigger: '.port__filters', start: 'top 85%' } }
+      )
     }, section)
     return () => ctx.revert()
   }, [])

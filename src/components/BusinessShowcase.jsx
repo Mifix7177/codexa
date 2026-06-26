@@ -29,23 +29,31 @@ export default function BusinessShowcase() {
     if (!section || !track) return
 
     const ctx = gsap.context(() => {
-      gsap.fromTo('.biz__title', { opacity: 0, y: 60 }, {
-        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: section, start: 'top 80%' }
-      })
-      gsap.fromTo('.biz__subtitle', { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 1, delay: 0.2, ease: 'power3.out',
-        scrollTrigger: { trigger: section, start: 'top 80%' }
-      })
+      // Header — blur in with stagger
+      gsap.fromTo('.biz__title', 
+        { opacity: 0, y: 80, filter: 'blur(12px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power4.out',
+          scrollTrigger: { trigger: section, start: 'top 80%' } }
+      )
+      gsap.fromTo('.biz__subtitle', 
+        { opacity: 0, y: 50, filter: 'blur(8px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, delay: 0.2, ease: 'power4.out',
+          scrollTrigger: { trigger: section, start: 'top 80%' } }
+      )
+
+      // Horizontal scroll
       const totalWidth = track.scrollWidth - window.innerWidth
       gsap.to(track, {
         x: -totalWidth, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top top', end: () => `+=${totalWidth}`, pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true }
+        scrollTrigger: { trigger: section, start: 'top top', end: () => `+=${totalWidth * 1.2}`, pin: true, scrub: 0.8, anticipatePin: 1, invalidateOnRefresh: true }
       })
-      gsap.fromTo('.biz__card', { opacity: 0, y: 60, scale: 0.9 }, {
-        opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: section, start: 'top 60%' }
-      })
+
+      // Cards — 3D perspective stagger
+      gsap.fromTo('.biz__card', 
+        { opacity: 0, y: 80, scale: 0.85, rotateX: 12, transformPerspective: 1200, transformOrigin: 'center bottom' }, 
+        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 1, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: section, start: 'top 60%' } }
+      )
     }, section)
     return () => ctx.revert()
   }, [])

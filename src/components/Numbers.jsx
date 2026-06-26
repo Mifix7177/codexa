@@ -14,7 +14,7 @@ function StatItem({ stat, index }) {
   const [ref, count] = useCounter(stat.value, 2000)
 
   return (
-    <motion.div ref={ref} className="num__item" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}>
+    <motion.div ref={ref} className="num__item" initial={{ opacity: 0, y: 50, scale: 0.8, filter: 'blur(10px)' }} whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.9, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}>
       <div className="num__value">
         <span style={{ color: stat.color }}>{count}</span>
         <span style={{ color: stat.color }}>{stat.suffix}</span>

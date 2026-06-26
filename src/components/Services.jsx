@@ -29,8 +29,21 @@ export default function Services() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.svc__header > *', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%' } })
-      gsap.fromTo('.svc__card', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: '.svc__grid', start: 'top 80%' } })
+      // Header — blur + slide up
+      gsap.fromTo('.svc__header > *', 
+        { opacity: 0, y: 70, filter: 'blur(10px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 78%' } }
+      )
+
+      // Cards — 3D perspective, stagger from center for a "burst" feel
+      gsap.fromTo('.svc__card', 
+        { opacity: 0, y: 70, scale: 0.88, rotateX: 10, transformPerspective: 1200, transformOrigin: 'center bottom' }, 
+        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 1, 
+          stagger: { each: 0.07, from: 'center' }, 
+          ease: 'power3.out', 
+          scrollTrigger: { trigger: '.svc__grid', start: 'top 82%' } }
+      )
     }, section)
     return () => ctx.revert()
   }, [])

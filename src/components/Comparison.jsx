@@ -24,9 +24,26 @@ export default function Comparison() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.cmp__header > *', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%' } })
-      gsap.fromTo('.cmp__row', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: '.cmp__table', start: 'top 80%' } })
-      gsap.fromTo('.cmp__highlight', { scaleX: 0 }, { scaleX: 1, duration: 0.6, stagger: 0.06, ease: 'power3.out', scrollTrigger: { trigger: '.cmp__table', start: 'top 75%' } })
+      // Header — blur reveal
+      gsap.fromTo('.cmp__header > *', 
+        { opacity: 0, y: 70, filter: 'blur(10px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 78%' } }
+      )
+
+      // Table rows — slide in from left with blur
+      gsap.fromTo('.cmp__row', 
+        { opacity: 0, x: -50, filter: 'blur(6px)' }, 
+        { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.06, ease: 'power3.out', 
+          scrollTrigger: { trigger: '.cmp__table', start: 'top 82%' } }
+      )
+
+      // Green highlights — scale with spring bounce
+      gsap.fromTo('.cmp__highlight', 
+        { scaleX: 0, transformOrigin: 'left center' }, 
+        { scaleX: 1, duration: 0.7, stagger: 0.05, ease: 'back.out(1.7)', 
+          scrollTrigger: { trigger: '.cmp__table', start: 'top 78%' } }
+      )
     }, section)
     return () => ctx.revert()
   }, [])

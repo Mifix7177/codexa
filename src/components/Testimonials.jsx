@@ -38,7 +38,19 @@ export default function Testimonials() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.test__header > *', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%' } })
+      // Header — blur reveal
+      gsap.fromTo('.test__header > *', 
+        { opacity: 0, y: 70, filter: 'blur(10px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 78%' } }
+      )
+
+      // Marquee track — fade in from right
+      gsap.fromTo('.test__marquee', 
+        { opacity: 0, x: 100 }, 
+        { opacity: 1, x: 0, duration: 1.5, ease: 'power3.out', 
+          scrollTrigger: { trigger: '.test__marquee', start: 'top 90%' } }
+      )
     }, section)
     return () => ctx.revert()
   }, [])

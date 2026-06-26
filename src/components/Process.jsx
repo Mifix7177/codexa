@@ -24,10 +24,26 @@ export default function Process() {
     const section = sectionRef.current
     if (!section) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.proc__header > *', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%' } })
+      // Header — blur reveal
+      gsap.fromTo('.proc__header > *', 
+        { opacity: 0, y: 70, filter: 'blur(10px)' }, 
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', 
+          scrollTrigger: { trigger: section, start: 'top 78%' } }
+      )
+
+      // Steps — each one activates on scroll with a scale/blur transition
       const stepEls = section.querySelectorAll('.proc__step')
       stepEls.forEach((step, i) => {
-        ScrollTrigger.create({ trigger: step, start: 'top center', end: 'bottom center', onEnter: () => setActiveStep(i), onEnterBack: () => setActiveStep(i) })
+        gsap.fromTo(step,
+          { opacity: 0.3, x: 40, filter: 'blur(4px)' },
+          { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: step, start: 'top 70%', toggleActions: 'play none none reverse' }
+          }
+        )
+        ScrollTrigger.create({ 
+          trigger: step, start: 'top center', end: 'bottom center', 
+          onEnter: () => setActiveStep(i), onEnterBack: () => setActiveStep(i) 
+        })
       })
     }, section)
     return () => ctx.revert()
