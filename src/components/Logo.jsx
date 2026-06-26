@@ -3,7 +3,7 @@ import './Logo.css'
 export function BrandName() {
   return (
     <span className="brand-name">
-      Code<span className="brand-name__x">x</span>a
+      Code<span className="brand-name__xa">xa</span>
     </span>
   )
 }
@@ -37,7 +37,7 @@ export default function Logo({ className = '' }) {
         <path d="M 65 25 L 35 75" stroke="url(#purpleGrad)" strokeWidth="14" strokeLinecap="round" />
       </svg>
       <span className="brand-logo__text">
-        Code<span className="brand-logo__x">x</span>a
+        Code<span className="brand-logo__xa">xa</span>
       </span>
     </div>
   )
