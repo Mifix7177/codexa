@@ -3,7 +3,7 @@ import './Logo.css'
 export function BrandName() {
   return (
     <span className="brand-name">
-      Code<span className="brand-name__xa">xa</span>
+      Code<span className="brand-name__x">x</span>a
     </span>
   )
 }
@@ -25,19 +25,19 @@ export default function Logo({ className = '' }) {
         </defs>
 
         {/* Left angle bracket < */}
-        <path d="M 35 25 L 15 50 L 35 75" stroke="url(#blueGrad)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 28 25 L 8 50 L 28 75" stroke="url(#blueGrad)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
         
         {/* Right angle bracket > */}
-        <path d="M 65 25 L 85 50 L 65 75" stroke="url(#purpleGrad)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 72 25 L 92 50 L 72 75" stroke="url(#purpleGrad)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
         
         {/* X left leg \ */}
-        <path d="M 35 25 L 65 75" stroke="url(#blueGrad)" strokeWidth="14" strokeLinecap="round" />
+        <path d="M 38 30 L 62 70" stroke="url(#blueGrad)" strokeWidth="12" strokeLinecap="round" />
         
         {/* X right leg / */}
-        <path d="M 65 25 L 35 75" stroke="url(#purpleGrad)" strokeWidth="14" strokeLinecap="round" />
+        <path d="M 62 30 L 38 70" stroke="url(#purpleGrad)" strokeWidth="12" strokeLinecap="round" />
       </svg>
       <span className="brand-logo__text">
-        Code<span className="brand-logo__xa">xa</span>
+        Code<span className="brand-logo__x">x</span>a
       </span>
     </div>
   )
