@@ -449,10 +449,18 @@ ul, ol {
 }
 
 .loader__logo {
+  justify-content: center;
+}
+
+.loader__logo .brand-logo__icon {
+  height: clamp(32px, 5vw, 48px);
+}
+
+.loader__logo .brand-logo__text {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-wider);
+  letter-spacing: -0.02em;
 }
 
 .loader__bar-track {

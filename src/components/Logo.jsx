@@ -25,16 +25,16 @@ export default function Logo({ className = '' }) {
         </defs>
 
         {/* Left angle bracket < */}
-        <path d="M 28 25 L 8 50 L 28 75" stroke="url(#blueGrad)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 22 25 L 2 50 L 22 75" stroke="url(#blueGrad)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
         
         {/* Right angle bracket > */}
-        <path d="M 72 25 L 92 50 L 72 75" stroke="url(#purpleGrad)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 78 25 L 98 50 L 78 75" stroke="url(#purpleGrad)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
         
         {/* X left leg \ */}
-        <path d="M 38 30 L 62 70" stroke="url(#blueGrad)" strokeWidth="12" strokeLinecap="round" />
+        <path d="M 42 30 L 58 70" stroke="url(#blueGrad)" strokeWidth="10" strokeLinecap="round" />
         
         {/* X right leg / */}
-        <path d="M 62 30 L 38 70" stroke="url(#purpleGrad)" strokeWidth="12" strokeLinecap="round" />
+        <path d="M 58 30 L 42 70" stroke="url(#purpleGrad)" strokeWidth="10" strokeLinecap="round" />
       </svg>
       <span className="brand-logo__text">
         Code<span className="brand-logo__x">x</span>a

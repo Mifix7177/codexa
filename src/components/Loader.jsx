@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Logo from './Logo'
 
 export default function Loader({ onComplete }) {
   const [show, setShow] = useState(true)
@@ -25,7 +26,7 @@ export default function Loader({ onComplete }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="loader__logo text-gradient">CODEXA</span>
+            <Logo className="loader__logo" />
           </motion.div>
           <motion.div
             className="loader__bar-track"
