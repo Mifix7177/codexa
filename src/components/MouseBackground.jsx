@@ -50,10 +50,11 @@ export default function MouseBackground() {
     })
     resizeObserver.observe(document.documentElement)
 
-    window.addEventListener('resize', () => {
+    const resizeHandler = () => {
       resize()
       createDots()
-    })
+    }
+    window.addEventListener('resize', resizeHandler, { passive: true })
 
     const handleMouseMove = (e) => {
       targetRef.current = {
@@ -69,7 +70,7 @@ export default function MouseBackground() {
       }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     // Animation loop
@@ -177,6 +178,7 @@ export default function MouseBackground() {
       cancelAnimationFrame(rafRef.current)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', resizeHandler)
       resizeObserver.disconnect()
     }
   }, [])

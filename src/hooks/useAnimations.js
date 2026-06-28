@@ -25,7 +25,7 @@ export function useMouseParallax(intensity = 0.02) {
       const y = (e.clientY - window.innerHeight / 2) * intensity
       setPosition({ x, y })
     }
-    window.addEventListener('mousemove', handler)
+    window.addEventListener('mousemove', handler, { passive: true })
     return () => window.removeEventListener('mousemove', handler)
   }, [intensity])
   return position
@@ -77,7 +77,7 @@ export function useWindowSize() {
   const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
   useEffect(() => {
     const handler = () => setSize({ width: window.innerWidth, height: window.innerHeight })
-    window.addEventListener('resize', handler)
+    window.addEventListener('resize', handler, { passive: true })
     return () => window.removeEventListener('resize', handler)
   }, [])
   return size

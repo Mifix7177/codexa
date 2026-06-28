@@ -1,16 +1,32 @@
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Logo from './Logo'
 import './Navbar.css'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (v) => {
-    setScrolled(v > 50)
-  })
+  useEffect(() => {
+    const sentinel = document.createElement('div')
+    sentinel.style.position = 'absolute'
+    sentinel.style.top = '50px'
+    sentinel.style.left = '0'
+    sentinel.style.width = '1px'
+    sentinel.style.height = '1px'
+    sentinel.style.pointerEvents = 'none'
+    document.body.appendChild(sentinel)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setScrolled(!entry.isIntersecting)
+    })
+    
+    observer.observe(sentinel)
+    return () => {
+      observer.disconnect()
+      if (sentinel.parentNode) sentinel.remove()
+    }
+  }, [])
 
   const links = [
     { label: 'Xizmatlar', href: '#services' },

@@ -19,6 +19,7 @@ import MouseBackground from './components/MouseBackground'
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
+ScrollTrigger.normalizeScroll(true)
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)

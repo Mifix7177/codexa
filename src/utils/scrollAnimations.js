@@ -11,15 +11,15 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Reveal animation presets
 export const PRESETS = {
-  fadeUp: { from: { opacity: 0, y: 80 }, to: { opacity: 1, y: 0 } },
-  fadeDown: { from: { opacity: 0, y: -60 }, to: { opacity: 1, y: 0 } },
-  fadeLeft: { from: { opacity: 0, x: -80 }, to: { opacity: 1, x: 0 } },
-  fadeRight: { from: { opacity: 0, x: 80 }, to: { opacity: 1, x: 0 } },
-  scaleUp: { from: { opacity: 0, scale: 0.8, y: 40 }, to: { opacity: 1, scale: 1, y: 0 } },
-  rotateIn: { from: { opacity: 0, rotateX: 15, y: 60, transformPerspective: 1000 }, to: { opacity: 1, rotateX: 0, y: 0 } },
+  fadeUp: { from: { autoAlpha: 0, y: 80 }, to: { autoAlpha: 1, y: 0 } },
+  fadeDown: { from: { autoAlpha: 0, y: -60 }, to: { autoAlpha: 1, y: 0 } },
+  fadeLeft: { from: { autoAlpha: 0, x: -80 }, to: { autoAlpha: 1, x: 0 } },
+  fadeRight: { from: { autoAlpha: 0, x: 80 }, to: { autoAlpha: 1, x: 0 } },
+  scaleUp: { from: { autoAlpha: 0, scale: 0.8, y: 40 }, to: { autoAlpha: 1, scale: 1, y: 0 } },
+  rotateIn: { from: { autoAlpha: 0, rotateX: 15, y: 60, transformPerspective: 1000 }, to: { autoAlpha: 1, rotateX: 0, y: 0 } },
   clipReveal: { from: { clipPath: 'inset(100% 0% 0% 0%)' }, to: { clipPath: 'inset(0% 0% 0% 0%)' } },
-  splitLines: { from: { opacity: 0, y: 100, skewY: 3 }, to: { opacity: 1, y: 0, skewY: 0 } },
-  blurIn: { from: { opacity: 0, filter: 'blur(20px)', y: 30 }, to: { opacity: 1, filter: 'blur(0px)', y: 0 } },
+  splitLines: { from: { autoAlpha: 0, y: 100, skewY: 3 }, to: { autoAlpha: 1, y: 0, skewY: 0 } },
+  blurIn: { from: { autoAlpha: 0, filter: 'blur(20px)', y: 30 }, to: { autoAlpha: 1, filter: 'blur(0px)', y: 0 } },
 }
 
 // Easing presets
@@ -98,9 +98,9 @@ export function createHorizontalScroll(trigger, track, options = {}) {
   const cards = track.querySelectorAll('.biz__card, .glass-card')
   cards.forEach((card, i) => {
     gsap.fromTo(card,
-      { opacity: 0, y: 80, scale: 0.85, rotateY: -8, transformPerspective: 1200 },
+      { autoAlpha: 0, y: 80, scale: 0.85, rotateY: -8, transformPerspective: 1200 },
       {
-        opacity: 1, y: 0, scale: 1, rotateY: 0,
+        autoAlpha: 1, y: 0, scale: 1, rotateY: 0,
         duration: 1,
         delay: i * 0.06,
         ease: 'power3.out',
@@ -123,9 +123,9 @@ export function animateHeader(section, selector = '> *') {
   const children = headerEl.querySelectorAll(selector)
   
   gsap.fromTo(children,
-    { opacity: 0, y: 70, filter: 'blur(8px)' },
+    { autoAlpha: 0, y: 70, filter: 'blur(8px)' },
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
       filter: 'blur(0px)',
       duration: 1.2,
@@ -152,7 +152,7 @@ export function animateCards(trigger, cardSelector, options = {}) {
 
   gsap.fromTo(cardSelector,
     {
-      opacity: 0,
+      autoAlpha: 0,
       y: 60,
       scale: 0.92,
       rotateX: 8,
@@ -160,7 +160,7 @@ export function animateCards(trigger, cardSelector, options = {}) {
       transformOrigin: 'center bottom',
     },
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
       scale: 1,
       rotateX: 0,
@@ -182,9 +182,9 @@ export function animateRows(trigger, rowSelector, options = {}) {
   const { start = 'top 80%', stagger = 0.06 } = options
 
   gsap.fromTo(rowSelector,
-    { opacity: 0, x: -40, filter: 'blur(4px)' },
+    { autoAlpha: 0, x: -40, filter: 'blur(4px)' },
     {
-      opacity: 1,
+      autoAlpha: 1,
       x: 0,
       filter: 'blur(0px)',
       duration: 0.8,
@@ -200,9 +200,9 @@ export function animateRows(trigger, rowSelector, options = {}) {
  */
 export function animateCounters(trigger, itemSelector) {
   gsap.fromTo(itemSelector,
-    { opacity: 0, y: 50, scale: 0.8 },
+    { autoAlpha: 0, y: 50, scale: 0.8 },
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
       scale: 1,
       duration: 1,
