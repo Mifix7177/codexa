@@ -18,6 +18,7 @@ import Footer from './components/Footer'
 import MouseBackground from './components/MouseBackground'
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
@@ -34,6 +35,7 @@ export default function App() {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
+      syncTouch: true,
       touchMultiplier: 2,
     })
 
