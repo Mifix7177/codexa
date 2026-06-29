@@ -12,10 +12,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 136, 255, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(157, 0, 255, 0.06) 0%, transparent 50%);
-  animation: gradientPulse 10s ease-in-out infinite;
+  /* Removed to avoid muddy banding over the liquid canvas */
+  background: none;
 }
 
 @keyframes gradientPulse {
@@ -23,15 +21,9 @@
   50% { opacity: 0.7; }
 }
 
-/* Grid overlay — mask controlled by mouse via Framer Motion */
+/* Grid overlay removed for smooth background */
 .hero__grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
+  display: none;
 }
 
 
