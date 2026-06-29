@@ -341,6 +341,25 @@ ul, ol {
   white-space: nowrap;
 }
 
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    80px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.3),
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
 .btn--primary {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(24px) saturate(200%);
@@ -547,4 +566,46 @@ ul, ol {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.scroll-saber {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-primary), 0 0 5px #fff;
+  transform-origin: 0%;
+  z-index: 99999;
+}
+
+.loader__terminal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: var(--accent-primary);
+  letter-spacing: 2px;
+}
+
+.loader__text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.loader__cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background-color: var(--accent-primary);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

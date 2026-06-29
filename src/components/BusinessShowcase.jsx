@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BrandName } from './Logo'
+import TiltCard from './TiltCard'
 import './BusinessShowcase.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -68,14 +69,14 @@ export default function BusinessShowcase() {
       <div className="biz__track" ref={trackRef}>
         <div className="biz__cards">
           {businesses.map((biz, i) => (
-            <article key={biz.name} className="biz__card glass-card" style={{ '--card-accent': biz.color }}>
+            <TiltCard key={biz.name} className="biz__card glass-card" style={{ '--card-accent': biz.color }}>
               <div className="biz__card-glow" />
               <div className="biz__card-number">{String(i + 1).padStart(2, '0')}</div>
               <div className="biz__card-icon">{biz.icon}</div>
               <h3 className="biz__card-name">{biz.name}</h3>
               <p className="biz__card-desc">{biz.desc}</p>
               <div className="biz__card-line" />
-            </article>
+            </TiltCard>
           ))}
         </div>
       </div>
