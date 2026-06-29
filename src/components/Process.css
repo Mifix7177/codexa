@@ -88,7 +88,7 @@
 }
 
 .proc__step-wrapper {
-  min-height: 100vh;
+  min-height: 45vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
