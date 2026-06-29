@@ -43,6 +43,21 @@ export default function App() {
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
 
+    // Handle anchor links for a slower, visible scroll animation
+    const handleAnchorClick = (e) => {
+      const href = e.currentTarget.getAttribute('href')
+      if (href && href.startsWith('#') && href.length > 1) {
+        e.preventDefault()
+        lenis.scrollTo(href, { 
+          duration: 2.5, 
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) 
+        })
+      }
+    }
+
+    const anchors = document.querySelectorAll('a[href^="#"]')
+    anchors.forEach(a => a.addEventListener('click', handleAnchorClick))
+
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000)
     })
@@ -50,6 +65,7 @@ export default function App() {
     gsap.ticker.lagSmoothing(0)
     
     return () => {
+      anchors.forEach(a => a.removeEventListener('click', handleAnchorClick))
       lenis.destroy()
       gsap.ticker.remove(lenis.raf)
     }
