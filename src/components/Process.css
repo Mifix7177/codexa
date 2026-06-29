@@ -93,7 +93,9 @@
   border: 1px solid transparent;
   transition: all var(--duration-normal) var(--ease-out-quart);
   position: relative;
-  margin-bottom: 60vh;
+  margin-bottom: 10vh;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 .proc__step:last-child {
   margin-bottom: 0;
