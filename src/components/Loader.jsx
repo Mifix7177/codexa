@@ -36,14 +36,6 @@ export default function Loader({ onComplete }) {
           >
             <div className="loader__bar" />
           </motion.div>
-          <motion.p
-            style={{ color: 'var(--text-tertiary)', fontSize: 'var(--fs-xs)', letterSpacing: 'var(--ls-wider)', textTransform: 'uppercase' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-          >
-            Digital Excellence
-          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>
