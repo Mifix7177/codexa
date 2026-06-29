@@ -45,6 +45,19 @@ export default function Process() {
           onEnter: () => setActiveStep(i), onEnterBack: () => setActiveStep(i) 
         })
       })
+
+      // Master snap trigger for smooth animated snapping
+      ScrollTrigger.create({
+        trigger: section.querySelector('.proc__steps'),
+        start: 'top top',
+        end: 'bottom bottom',
+        snap: {
+          snapTo: 1 / (steps.length - 1),
+          duration: { min: 0.8, max: 1.5 },
+          delay: 0.1,
+          ease: "power2.inOut"
+        }
+      })
     }, section)
     return () => ctx.revert()
   }, [])
@@ -70,11 +83,13 @@ export default function Process() {
           </div>
           <div className="proc__steps">
             {steps.map((step, i) => (
-              <div key={step.num} className={`proc__step ${i === activeStep ? 'proc__step--active' : ''}`}>
-                <div className="proc__step-num" style={{ color: step.accent }}>{step.num}</div>
-                <h3 className="proc__step-title">{step.title}</h3>
-                <p className="proc__step-desc">{step.desc}</p>
-                <div className="proc__step-line" style={{ background: step.accent }} />
+              <div key={step.num} className="proc__step-wrapper">
+                <div className={`proc__step ${i === activeStep ? 'proc__step--active' : ''}`}>
+                  <div className="proc__step-num" style={{ color: step.accent }}>{step.num}</div>
+                  <h3 className="proc__step-title">{step.title}</h3>
+                  <p className="proc__step-desc">{step.desc}</p>
+                  <div className="proc__step-line" style={{ background: step.accent }} />
+                </div>
               </div>
             ))}
           </div>

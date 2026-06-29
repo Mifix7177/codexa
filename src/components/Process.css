@@ -87,18 +87,19 @@
   gap: var(--space-md);
 }
 
+.proc__step-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .proc__step {
   padding: var(--space-3xl) var(--space-xl);
   border-radius: var(--radius-lg);
   border: 1px solid transparent;
   transition: all var(--duration-normal) var(--ease-out-quart);
   position: relative;
-  margin-bottom: 10vh;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-}
-.proc__step:last-child {
-  margin-bottom: 0;
 }
 
 .proc__step--active {
