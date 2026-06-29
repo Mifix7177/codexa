@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -15,43 +14,21 @@ import Testimonials from './components/Testimonials'
 import Numbers from './components/Numbers'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
+import MouseBackground from './components/MouseBackground'
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
-  const lenisRef = useRef(null)
 
   useEffect(() => {
     if (!loaded) return
 
-    // Initialize Lenis
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      syncTouch: true,
-      touchMultiplier: 2,
-    })
-
-    lenisRef.current = lenis
-
-    // Connect Lenis to GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update)
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000)
-    })
-
+    // GSAP ScrollTrigger setup
     gsap.ticker.lagSmoothing(0)
-
+    
     return () => {
-      lenis.destroy()
-      gsap.ticker.remove(lenis.raf)
     }
   }, [loaded])
 
@@ -64,6 +41,7 @@ export default function App() {
       {!loaded && <Loader onComplete={handleLoadComplete} />}
       {loaded && (
         <>
+          <MouseBackground />
           <Navbar />
           <main>
             <Hero />
