@@ -4,8 +4,6 @@ import './MouseBackground.css'
 export default function MouseBackground() {
   const canvasRef = useRef(null)
   const mouseRef = useRef({ x: -1000, y: -1000 })
-  const targetRef = useRef({ x: -1000, y: -1000 })
-  const dotsRef = useRef([])
   const rafRef = useRef(null)
 
   useEffect(() => {
@@ -15,158 +13,77 @@ export default function MouseBackground() {
 
     const resize = () => {
       w = canvas.width = window.innerWidth
-      h = canvas.height = document.documentElement.scrollHeight
+      h = canvas.height = window.innerHeight
     }
-
-    // Create dot grid
-    const createDots = () => {
-      const spacing = 35
-      const dots = []
-      const cols = Math.ceil(w / spacing) + 1
-      const rows = Math.ceil(h / spacing) + 1
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          dots.push({
-            x: i * spacing,
-            y: j * spacing,
-            baseRadius: 1,
-            radius: 1,
-            baseAlpha: 0.12,
-            alpha: 0.12,
-            color: Math.random() > 0.5 ? 'blue' : 'purple',
-          })
-        }
-      }
-      dotsRef.current = dots
-    }
-
+    
     resize()
-    createDots()
-
-    // Resize observer for scroll height changes
-    const resizeObserver = new ResizeObserver(() => {
-      resize()
-      createDots()
-    })
-    resizeObserver.observe(document.documentElement)
-
-    const resizeHandler = () => {
-      resize()
-      createDots()
-    }
-    window.addEventListener('resize', resizeHandler, { passive: true })
+    window.addEventListener('resize', resize, { passive: true })
 
     const handleMouseMove = (e) => {
-      targetRef.current = {
+      mouseRef.current = {
         x: e.clientX,
-        y: e.clientY + window.scrollY,
+        y: e.clientY
       }
     }
-
-    const handleScroll = () => {
-      targetRef.current = {
-        x: mouseRef.current.x,
-        y: (targetRef.current.y - (mouseRef.current.y - window.scrollY)) + window.scrollY,
-      }
-    }
-
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    window.addEventListener('scroll', handleScroll, { passive: true })
 
-    // Animation loop
-    const lerp = (a, b, t) => a + (b - a) * t
+    // Create liquid orbs
+    const orbs = [
+      { x: 0.2, y: 0.3, radius: 0.4, color: 'rgba(255, 255, 255, 0.06)' }, // Chrome/Silver
+      { x: 0.8, y: 0.7, radius: 0.35, color: 'rgba(255, 255, 255, 0.04)' }, // Chrome
+      { x: 0.5, y: 0.5, radius: 0.45, color: 'rgba(0, 0, 0, 1)' }, // Black core
+      { x: 0.7, y: 0.2, radius: 0.25, color: 'rgba(0, 229, 255, 0.1)' }, // Icy Blue
+      { x: 0.3, y: 0.8, radius: 0.4, color: 'rgba(10, 10, 10, 1)' } // Charcoal
+    ]
+
+    let time = 0;
 
     const draw = () => {
-      // Smooth interpolation toward target
-      mouseRef.current.x = lerp(mouseRef.current.x, targetRef.current.x, 0.08)
-      mouseRef.current.y = lerp(mouseRef.current.y, targetRef.current.y, 0.08)
-
       ctx.clearRect(0, 0, w, h)
+      ctx.fillStyle = '#050505' // Base charcoal
+      ctx.fillRect(0, 0, w, h)
+
+      time += 0.002;
 
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
-      const scrollY = window.scrollY
-      const radius = 280
-      const strongRadius = 120
 
-      const dots = dotsRef.current
-      for (let i = 0; i < dots.length; i++) {
-        const dot = dots[i]
-        const dx = dot.x - mx
-        const dy = dot.y - my
-        const dist = Math.sqrt(dx * dx + dy * dy)
+      // Update and draw orbs
+      for (let i = 0; i < orbs.length; i++) {
+        const orb = orbs[i]
+        
+        // Add subtle sine wave movement
+        const offsetX = Math.sin(time + i * 15) * w * 0.15
+        const offsetY = Math.cos(time + i * 15) * h * 0.15
+        
+        let targetX = w * orb.x + offsetX
+        let targetY = h * orb.y + offsetY
 
-        if (dist < radius) {
-          const intensity = 1 - dist / radius
-          const strongIntensity = dist < strongRadius ? 1 - dist / strongRadius : 0
-
-          dot.alpha = lerp(dot.baseAlpha, 0.8, intensity)
-          dot.radius = lerp(dot.baseRadius, 3.5, strongIntensity * 0.8 + intensity * 0.4)
-
-          // Draw connecting lines to nearby illuminated dots
-          if (intensity > 0.3) {
-            for (let j = i + 1; j < dots.length; j++) {
-              const other = dots[j]
-              const odx = other.x - mx
-              const ody = other.y - my
-              const oDist = Math.sqrt(odx * odx + ody * ody)
-              if (oDist < radius) {
-                const lineDx = dot.x - other.x
-                const lineDy = dot.y - other.y
-                const lineDist = Math.sqrt(lineDx * lineDx + lineDy * lineDy)
-                if (lineDist < 55 && lineDist > 5) {
-                  const lineAlpha = (1 - lineDist / 55) * intensity * 0.15
-                  ctx.beginPath()
-                  ctx.moveTo(dot.x, dot.y - scrollY)
-                  ctx.lineTo(other.x, other.y - scrollY)
-                  ctx.strokeStyle = dot.color === 'blue'
-                    ? `rgba(0, 136, 255, ${lineAlpha})`
-                    : `rgba(157, 0, 255, ${lineAlpha})`
-                  ctx.lineWidth = 0.5
-                  ctx.stroke()
-                }
-              }
-            }
-          }
-        } else {
-          dot.alpha = dot.baseAlpha
-          dot.radius = dot.baseRadius
+        // Very subtle mouse reaction
+        if (mx > -500) {
+           const dx = mx - targetX
+           const dy = my - targetY
+           const dist = Math.sqrt(dx * dx + dy * dy)
+           if (dist < w * 0.4) {
+              targetX -= dx * 0.08
+              targetY -= dy * 0.08
+           }
         }
-
-        // Only draw visible dots
-        const screenY = dot.y - scrollY
-        if (screenY < -10 || screenY > window.innerHeight + 10) continue
 
         ctx.beginPath()
-        ctx.arc(dot.x, screenY, dot.radius, 0, Math.PI * 2)
-        if (dot.color === 'blue') {
-          ctx.fillStyle = `rgba(0, 136, 255, ${dot.alpha})`
-        } else {
-          ctx.fillStyle = `rgba(157, 0, 255, ${dot.alpha})`
-        }
+        ctx.fillStyle = orb.color
+        ctx.arc(targetX, targetY, w * orb.radius, 0, Math.PI * 2)
         ctx.fill()
       }
 
       // Update glass-card local coordinates for border glow
       const cards = document.querySelectorAll('.glass-card')
-      const screenMy = my - scrollY
       for (let i = 0; i < cards.length; i++) {
         const rect = cards[i].getBoundingClientRect()
         const x = mx - rect.left
-        const y = screenMy - rect.top
+        const y = my - rect.top
         cards[i].style.setProperty('--mouse-x', `${x}px`)
         cards[i].style.setProperty('--mouse-y', `${y}px`)
-      }
-
-      // Soft glow at cursor
-      if (mx > -500) {
-        const screenMy = my - scrollY
-        const gradient = ctx.createRadialGradient(mx, screenMy, 0, mx, screenMy, 300)
-        gradient.addColorStop(0, 'rgba(0, 136, 255, 0.06)')
-        gradient.addColorStop(0.4, 'rgba(157, 0, 255, 0.03)')
-        gradient.addColorStop(1, 'transparent')
-        ctx.fillStyle = gradient
-        ctx.fillRect(mx - 300, screenMy - 300, 600, 600)
       }
 
       rafRef.current = requestAnimationFrame(draw)
@@ -177,9 +94,7 @@ export default function MouseBackground() {
     return () => {
       cancelAnimationFrame(rafRef.current)
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', resizeHandler)
-      resizeObserver.disconnect()
+      window.removeEventListener('resize', resize)
     }
   }, [])
 
