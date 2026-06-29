@@ -88,12 +88,12 @@
 }
 
 .proc__step {
-  padding: var(--space-3xl) var(--space-xl);
+  padding: var(--space-4xl) var(--space-xl);
   border-radius: var(--radius-lg);
   border: 1px solid transparent;
   transition: all var(--duration-normal) var(--ease-out-quart);
   position: relative;
-  min-height: 40vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
