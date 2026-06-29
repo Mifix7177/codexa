@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import './CustomCursor.css'
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const cursorX = useMotionValue(-100)
+  const cursorY = useMotionValue(-100)
+  
+  // Smooth out the movement slightly
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 }
+  const mouseX = useSpring(cursorX, springConfig)
+  const mouseY = useSpring(cursorY, springConfig)
+
   const [isHovering, setIsHovering] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -15,7 +22,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      cursorX.set(e.clientX)
+      cursorY.set(e.clientY)
     }
 
     const handleMouseOver = (e) => {
@@ -32,14 +40,14 @@ export default function CustomCursor() {
       }
     }
 
-    window.addEventListener('mousemove', updateMousePosition)
-    window.addEventListener('mouseover', handleMouseOver)
+    window.addEventListener('mousemove', updateMousePosition, { passive: true })
+    window.addEventListener('mouseover', handleMouseOver, { passive: true })
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition)
       window.removeEventListener('mouseover', handleMouseOver)
     }
-  }, [])
+  }, [cursorX, cursorY])
 
   if (isMobile) return null
 
@@ -48,9 +56,13 @@ export default function CustomCursor() {
       {/* Glowing dot at the exact cursor point */}
       <motion.div
         className="cursor-dot"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          translateX: "-4px",
+          translateY: "-4px"
+        }}
         animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
           scale: isHovering ? 0 : 1
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
@@ -58,9 +70,13 @@ export default function CustomCursor() {
       {/* Rounded polygon arrow following the dot */}
       <motion.div
         className="cursor-outline"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          translateX: "-2px",
+          translateY: "-2px"
+        }}
         animate={{
-          x: mousePosition.x - 2, // slightly offset so the dot is at the tip
-          y: mousePosition.y - 2,
           scale: isHovering ? 1.3 : 1,
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}

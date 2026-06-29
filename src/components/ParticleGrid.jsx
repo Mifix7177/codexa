@@ -72,7 +72,22 @@ export default function ParticleGrid() {
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('mouseout', handleMouseLeave, { passive: true })
 
+    let isVisible = true;
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+      if (isVisible && !rafRef.current) {
+        // Resume animation if it was paused
+        rafRef.current = requestAnimationFrame(draw);
+      }
+    });
+    observer.observe(canvas);
+
     const draw = () => {
+      if (!isVisible) {
+        rafRef.current = null;
+        return; // Pause animation completely when not in view
+      }
+
       ctx.clearRect(0, 0, w, h)
       
       const mx = mouseRef.current.x
@@ -90,30 +105,27 @@ export default function ParticleGrid() {
           const dist = Math.sqrt(dx * dx + dy * dy)
 
           if (dist < maxDist) {
-            // Map distance to radius (from 1px to 4px radius -> 2px to 8px diameter)
-            // The closer, the larger
             const distNorm = 1 - (dist / maxDist)
             
             if (distNorm > 0.8) {
-              targetR = 4 // Very close: 8px dia
+              targetR = 4
               isGlowing = true
             } else if (distNorm > 0.5) {
-              targetR = 3 // Close: 6px dia
+              targetR = 3
               isGlowing = true
             } else if (distNorm > 0) {
-              targetR = 2 // Medium: 4px dia
+              targetR = 2
             }
           }
         }
 
-        // Smooth interpolation (lerp)
         dot.currentRadius += (targetR - dot.currentRadius) * 0.15
 
         ctx.beginPath()
         ctx.arc(dot.x, dot.y, dot.currentRadius, 0, Math.PI * 2)
         
         if (dot.currentRadius > 1.5 && isGlowing) {
-          ctx.fillStyle = '#22D3EE' // Subtle cyan glow
+          ctx.fillStyle = '#22D3EE'
           ctx.globalAlpha = 0.6
         } else {
           ctx.fillStyle = '#ffffff'
@@ -123,18 +135,19 @@ export default function ParticleGrid() {
         ctx.fill()
       }
       
-      ctx.globalAlpha = 1.0 // Reset alpha
+      ctx.globalAlpha = 1.0
 
       rafRef.current = requestAnimationFrame(draw)
     }
 
-    draw()
+    rafRef.current = requestAnimationFrame(draw)
 
     return () => {
-      cancelAnimationFrame(rafRef.current)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseout', handleMouseLeave)
+      observer.disconnect()
     }
   }, [])
 

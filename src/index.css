@@ -531,7 +531,7 @@ ul, ol {
    Performance & Accessibility (Mobile Lag Fixes)
    ═══════════════════════════════════════════════════════════════ */
 
-.gpu-accelerated, .glass-card, .btn, .badge, .section > *, .container > * {
+.gpu-accelerated, .glass-card, .btn {
   will-change: transform, opacity;
   transform: translateZ(0);
 }

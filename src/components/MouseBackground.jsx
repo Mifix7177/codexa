@@ -174,8 +174,10 @@ export default function MouseBackground() {
     const timeLocation = gl.getUniformLocation(program, 'u_time');
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Downscale by a pixel ratio for significant GPU performance gain
+      const pixelRatio = 0.5; // 50% resolution
+      canvas.width = window.innerWidth * pixelRatio;
+      canvas.height = window.innerHeight * pixelRatio;
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
     };
@@ -183,32 +185,55 @@ export default function MouseBackground() {
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
+    // Cache cards for mouse tracking to avoid querySelectorAll on every frame
+    let glassCards = [];
+    const updateCardsList = () => {
+      glassCards = Array.from(document.querySelectorAll('.glass-card'));
+    };
+    
+    // Initial fetch and listen for DOM changes (if cards are added dynamically)
+    updateCardsList();
+    const observer = new MutationObserver(updateCardsList);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    let isMouseMoving = false;
+
     const handleMouseMove = (e) => {
       mouseRef.current = {
         x: e.clientX,
         y: e.clientY
       };
-      
-      // Update glass-card local coordinates
-      const cards = document.querySelectorAll('.glass-card');
-      for (let i = 0; i < cards.length; i++) {
-        const rect = cards[i].getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        cards[i].style.setProperty('--mouse-x', `${x}px`);
-        cards[i].style.setProperty('--mouse-y', `${y}px`);
-      }
+      isMouseMoving = true;
     };
+    
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     let startTime = performance.now();
 
     const render = (time) => {
       // In WebGL, y=0 is bottom, so we invert Y for mouse
-      gl.uniform2f(mouseLocation, mouseRef.current.x, canvas.height - mouseRef.current.y);
+      // Since resolution is downscaled by pixelRatio, we must also scale mouse coords
+      const pixelRatio = 0.5;
+      gl.uniform2f(
+        mouseLocation, 
+        mouseRef.current.x * pixelRatio, 
+        canvas.height - (mouseRef.current.y * pixelRatio)
+      );
       gl.uniform1f(timeLocation, (time - startTime) * 0.001);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      // Only update DOM properties in rAF, and only if mouse recently moved
+      if (isMouseMoving && glassCards.length > 0) {
+        for (let i = 0; i < glassCards.length; i++) {
+          const rect = glassCards[i].getBoundingClientRect();
+          const x = mouseRef.current.x - rect.left;
+          const y = mouseRef.current.y - rect.top;
+          glassCards[i].style.setProperty('--mouse-x', `${x}px`);
+          glassCards[i].style.setProperty('--mouse-y', `${y}px`);
+        }
+        isMouseMoving = false; // Reset until next mousemove
+      }
 
       rafRef.current = requestAnimationFrame(render);
     };
@@ -219,6 +244,7 @@ export default function MouseBackground() {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
+      observer.disconnect();
       
       // Cleanup WebGL resources
       gl.deleteBuffer(positionBuffer);

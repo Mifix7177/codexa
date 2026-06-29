@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue, useInView } from 'framer-motion'
 import './Marquee.css'
 
 const wrap = (min, max, v) => {
@@ -20,9 +20,14 @@ function ParallaxText({ children, baseVelocity = 100 }) {
   })
 
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`)
-
   const directionFactor = useRef(1)
+  
+  const containerRef = useRef(null)
+  const isInView = useInView(containerRef, { margin: "200px 0px" })
+
   useAnimationFrame((t, delta) => {
+    if (!isInView) return // Optimization: Don't calculate if not visible
+
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
 
     if (velocityFactor.get() < 0) {
@@ -36,7 +41,7 @@ function ParallaxText({ children, baseVelocity = 100 }) {
   })
 
   return (
-    <div className="parallax">
+    <div className="parallax" ref={containerRef}>
       <motion.div className="scroller" style={{ x }}>
         <span>{children} </span>
         <span>{children} </span>
