@@ -119,10 +119,11 @@
 }
 
 .hero__scroll span {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   letter-spacing: var(--ls-wider);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
 }
 
 .hero__scroll-line {

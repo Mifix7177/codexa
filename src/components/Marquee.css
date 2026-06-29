@@ -26,11 +26,13 @@
   white-space: nowrap;
   flex-wrap: nowrap;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.25);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
 }
 
 .parallax:nth-child(2) .scroller {
-  -webkit-text-stroke: 1px rgba(0, 229, 255, 0.2);
+  -webkit-text-stroke: 1.5px rgba(0, 229, 255, 0.4);
+  text-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
 }
 
 .parallax .scroller span {

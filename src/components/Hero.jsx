@@ -34,7 +34,7 @@ export default function Hero() {
         { autoAlpha: 1, y: 0, duration: 1 }, 
         "-=0.8"
       )
-      .fromTo('.hero__stats-item', 
+      .fromTo('.hero__stat', 
         { autoAlpha: 0, x: -20 }, 
         { autoAlpha: 1, x: 0, duration: 0.8, stagger: 0.1 }, 
         "-=0.6"
@@ -94,19 +94,19 @@ export default function Hero() {
             </div>
 
             <div className="hero__stats">
-              <div className="hero__stats-item">
-                <span className="hero__stats-num">200+</span>
-                <span className="hero__stats-label">Muvaffaqiyatli<br/>Loyihalar</span>
+              <div className="hero__stat">
+                <span className="hero__stat-number text-gradient">200+</span>
+                <span className="hero__stat-label">Muvaffaqiyatli<br/>Loyihalar</span>
               </div>
-              <div className="hero__stats-divider" />
-              <div className="hero__stats-item">
-                <span className="hero__stats-num">98%</span>
-                <span className="hero__stats-label">Mijozlar<br/>Qoniqishi</span>
+              <div className="hero__stat-divider" />
+              <div className="hero__stat">
+                <span className="hero__stat-number text-gradient">98%</span>
+                <span className="hero__stat-label">Mijozlar<br/>Qoniqishi</span>
               </div>
-              <div className="hero__stats-divider" />
-              <div className="hero__stats-item">
-                <span className="hero__stats-num">5+</span>
-                <span className="hero__stats-label">Yillik<br/>Tajriba</span>
+              <div className="hero__stat-divider" />
+              <div className="hero__stat">
+                <span className="hero__stat-number text-gradient">5+</span>
+                <span className="hero__stat-label">Yillik<br/>Tajriba</span>
               </div>
             </div>
           </div>
