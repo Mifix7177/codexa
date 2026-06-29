@@ -6,10 +6,9 @@ export default function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
   
-  // Smooth out the movement slightly
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 }
-  const mouseX = useSpring(cursorX, springConfig)
-  const mouseY = useSpring(cursorY, springConfig)
+  // Removed useSpring to give perfect 1:1 control and eliminate lag/spread
+  const mouseX = cursorX
+  const mouseY = cursorY
 
   const [isHovering, setIsHovering] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -31,8 +30,7 @@ export default function CustomCursor() {
       if (
         e.target.closest('a') || 
         e.target.closest('button') || 
-        e.target.closest('.magnetic') ||
-        e.target.closest('.glass-card')
+        e.target.closest('.magnetic')
       ) {
         setIsHovering(true)
       } else {
