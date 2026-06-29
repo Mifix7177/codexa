@@ -59,29 +59,47 @@ export default function CustomCursor() {
       <motion.div
         className="cursor-outline"
         animate={{
-          x: mousePosition.x - 2, // slightly offset so dot is at the tip
+          x: mousePosition.x - 2, // slightly offset so the dot is at the tip
           y: mousePosition.y - 2,
-          scale: isHovering ? 1.5 : 1,
+          scale: isHovering ? 1.3 : 1,
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}
       >
         <svg 
-          width="24" height="24" 
-          viewBox="0 0 24 24" 
+          width="40" height="40" 
+          viewBox="0 0 40 40" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           style={{
-            transform: "rotate(-10deg)",
+            filter: isHovering ? "drop-shadow(0 0 12px rgba(0, 229, 255, 0.9))" : "drop-shadow(0 0 8px rgba(0, 229, 255, 0.6))",
+            transition: 'filter 0.3s ease',
+            transform: "rotate(-5deg)",
           }}
         >
+          {/* Main filled shape */}
           <path 
-            d="M3 3L20 9L12 12L9 20L3 3Z" 
-            stroke={isHovering ? "rgba(0, 229, 255, 0.8)" : "rgba(255, 255, 255, 0.5)"} 
+            d="M4 4 L34 14 L18 18 L14 34 Z" 
+            fill="rgba(0, 60, 80, 0.85)" 
+            stroke="rgba(0, 229, 255, 0.9)" 
             strokeWidth="1.5" 
             strokeLinejoin="round" 
-            fill={isHovering ? "rgba(0, 229, 255, 0.2)" : "transparent"} 
-            style={{ transition: 'all 0.3s ease' }}
           />
+          
+          {/* Internal constellation / 3D lines */}
+          <path 
+            d="M4 4 L14 14 L34 14 M14 14 L18 18 M14 14 L14 34" 
+            stroke="rgba(0, 229, 255, 0.5)" 
+            strokeWidth="1" 
+          />
+          
+          {/* Glowing nodes at vertices */}
+          <circle cx="4" cy="4" r="2.5" fill="#fff" />
+          <circle cx="34" cy="14" r="2" fill="#fff" />
+          <circle cx="18" cy="18" r="1.5" fill="#fff" />
+          <circle cx="14" cy="34" r="2" fill="#fff" />
+          
+          {/* Center geometry node */}
+          <circle cx="14" cy="14" r="2.5" fill="#fff" />
         </svg>
       </motion.div>
     </>
