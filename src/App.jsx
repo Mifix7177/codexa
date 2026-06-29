@@ -6,7 +6,6 @@ import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BusinessShowcase from './components/BusinessShowcase'
-import Services from './components/Services'
 import Process from './components/Process'
 import Comparison from './components/Comparison'
 import Portfolio from './components/Portfolio'
@@ -46,7 +45,6 @@ export default function App() {
           <main>
             <Hero />
             <BusinessShowcase />
-            <Services />
             <Process />
             <Comparison />
             <Portfolio />
