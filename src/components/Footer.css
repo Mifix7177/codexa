@@ -1,13 +1,22 @@
 .footer {
   padding: var(--space-4xl) 0 var(--space-2xl);
   position: relative;
+  background: rgba(5, 5, 5, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 10;
 }
 
 .footer__top {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--space-3xl);
   margin-bottom: var(--space-3xl);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--space-xl);
 }
 
 .footer__brand {
@@ -83,7 +92,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--space-xl);
+  padding: var(--space-xl) var(--space-xl) 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer__copy {
