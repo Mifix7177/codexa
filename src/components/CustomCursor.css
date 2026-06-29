@@ -25,10 +25,7 @@
 
 /* Hide default cursor only on fine pointer devices */
 @media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a, button, .magnetic {
-    cursor: none;
+  *, *::before, *::after {
+    cursor: none !important;
   }
 }
