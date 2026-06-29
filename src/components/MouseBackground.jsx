@@ -185,15 +185,15 @@ export default function MouseBackground() {
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
-    // Cache cards and buttons for mouse tracking to avoid querySelectorAll on every frame
-    let interactiveElements = [];
-    const updateInteractiveList = () => {
-      interactiveElements = Array.from(document.querySelectorAll('.glass-card, .btn'));
+    // Cache cards for mouse tracking to avoid querySelectorAll on every frame
+    let glassCards = [];
+    const updateCardsList = () => {
+      glassCards = Array.from(document.querySelectorAll('.glass-card'));
     };
     
-    // Initial fetch and listen for DOM changes
-    updateInteractiveList();
-    const observer = new MutationObserver(updateInteractiveList);
+    // Initial fetch and listen for DOM changes (if cards are added dynamically)
+    updateCardsList();
+    const observer = new MutationObserver(updateCardsList);
     observer.observe(document.body, { childList: true, subtree: true });
 
     let isMouseMoving = false;
@@ -224,13 +224,13 @@ export default function MouseBackground() {
       gl.drawArrays(gl.TRIANGLES, 0, 6);
 
       // Only update DOM properties in rAF, and only if mouse recently moved
-      if (isMouseMoving && interactiveElements.length > 0) {
-        for (let i = 0; i < interactiveElements.length; i++) {
-          const rect = interactiveElements[i].getBoundingClientRect();
+      if (isMouseMoving && glassCards.length > 0) {
+        for (let i = 0; i < glassCards.length; i++) {
+          const rect = glassCards[i].getBoundingClientRect();
           const x = mouseRef.current.x - rect.left;
           const y = mouseRef.current.y - rect.top;
-          interactiveElements[i].style.setProperty('--mouse-x', `${x}px`);
-          interactiveElements[i].style.setProperty('--mouse-y', `${y}px`);
+          glassCards[i].style.setProperty('--mouse-x', `${x}px`);
+          glassCards[i].style.setProperty('--mouse-y', `${y}px`);
         }
         isMouseMoving = false; // Reset until next mousemove
       }

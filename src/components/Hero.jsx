@@ -19,9 +19,9 @@ export default function Hero() {
         { autoAlpha: 0, y: 30, scale: 0.9 }, 
         { autoAlpha: 1, y: 0, scale: 1, duration: 1, delay: 2.2 } // wait for Loader
       )
-      .fromTo('.hero__title .char', 
-        { autoAlpha: 0, y: 40, rotateX: -90, transformOrigin: '50% 50% -50px' }, 
-        { autoAlpha: 1, y: 0, rotateX: 0, duration: 0.8, stagger: 0.03 }, 
+      .fromTo('.hero__title .line-inner', 
+        { yPercent: 100, rotate: 5 }, 
+        { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.1 }, 
         "-=0.5"
       )
       .fromTo('.hero__subtitle', 
@@ -62,14 +62,6 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
-  const splitTextToChars = (text) => {
-    return text.split('').map((char, index) => (
-      <span key={index} className="char" style={{ display: 'inline-block' }}>
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    ))
-  }
-
   return (
     <section className="hero" ref={heroRef}>
       <ParticleGrid />
@@ -82,9 +74,9 @@ export default function Hero() {
             </div>
             
             <h1 className="hero__title heading-hero">
-              <div className="line"><div className="line-inner">{splitTextToChars('Biznesingizni')}</div></div>
-              <div className="line"><div className="line-inner"><span className="text-gradient">{splitTextToChars('Kelajakka')}</span></div></div>
-              <div className="line"><div className="line-inner">{splitTextToChars('Olib Chiqamiz')}</div></div>
+              <div className="line"><div className="line-inner">Biznesingizni</div></div>
+              <div className="line"><div className="line-inner"><span className="text-gradient">Kelajakka</span></div></div>
+              <div className="line"><div className="line-inner">Olib Chiqamiz</div></div>
             </h1>
             
             <p className="hero__subtitle">

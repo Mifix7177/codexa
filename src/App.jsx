@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { motion, useScroll, useSpring } from 'framer-motion'
 
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
@@ -25,13 +24,6 @@ ScrollTrigger.config({ ignoreMobileResize: true })
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   const lenisRef = useRef(null)
-
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
 
   useEffect(() => {
     if (!loaded) return
@@ -90,10 +82,6 @@ export default function App() {
       {!loaded && <Loader onComplete={handleLoadComplete} />}
       {loaded && (
         <>
-          <motion.div 
-            className="scroll-saber"
-            style={{ scaleX }}
-          />
           <CustomCursor />
           <MouseBackground />
           <Navbar />

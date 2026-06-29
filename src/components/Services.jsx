@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import TiltCard from './TiltCard'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Services.css'
