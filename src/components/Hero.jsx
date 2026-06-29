@@ -24,7 +24,7 @@ export default function Hero() {
         { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.1 }, 
         "-=0.5"
       )
-      .fromTo('.hero__desc', 
+      .fromTo('.hero__subtitle', 
         { autoAlpha: 0, y: 20 }, 
         { autoAlpha: 1, y: 0, duration: 1 }, 
         "-=0.6"
@@ -73,13 +73,13 @@ export default function Hero() {
               <span className="hero__badge-text">Yangi Raqamli Davrga Xush Kelibsiz</span>
             </div>
             
-            <h1 className="hero__title heading-display">
+            <h1 className="hero__title heading-hero">
               <div className="line"><div className="line-inner">Biznesingizni</div></div>
               <div className="line"><div className="line-inner"><span className="text-gradient">Kelajakka</span></div></div>
               <div className="line"><div className="line-inner">Olib Chiqamiz</div></div>
             </h1>
             
-            <p className="hero__desc text-secondary">
+            <p className="hero__subtitle">
               Codexa – ilg'or texnologiyalar, betakror dizayn va ma'lumotlarga asoslangan strategiyalar yordamida korxonangiz uchun raqamli mukammallikni yaratadi.
             </p>
 
