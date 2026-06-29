@@ -1,73 +1,120 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { BrandName } from './Logo'
-import ParticleGrid from './ParticleGrid'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import MagneticButton from './MagneticButton'
 import './Hero.css'
+import ParticleGrid from './ParticleGrid'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
-  const sectionRef = useRef(null)
+  const heroRef = useRef(null)
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9])
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Create a cinematic entrance sequence
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
-  const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 2.5 } } }
-  const itemVariants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } } }
+      tl.fromTo('.hero__badge', 
+        { autoAlpha: 0, y: 30, scale: 0.9 }, 
+        { autoAlpha: 1, y: 0, scale: 1, duration: 1, delay: 2.2 } // wait for Loader
+      )
+      .fromTo('.hero__title .line-inner', 
+        { yPercent: 100, rotate: 5 }, 
+        { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.1 }, 
+        "-=0.5"
+      )
+      .fromTo('.hero__desc', 
+        { autoAlpha: 0, y: 20 }, 
+        { autoAlpha: 1, y: 0, duration: 1 }, 
+        "-=0.6"
+      )
+      .fromTo('.hero__actions', 
+        { autoAlpha: 0, y: 20 }, 
+        { autoAlpha: 1, y: 0, duration: 1 }, 
+        "-=0.8"
+      )
+      .fromTo('.hero__stats-item', 
+        { autoAlpha: 0, x: -20 }, 
+        { autoAlpha: 1, x: 0, duration: 0.8, stagger: 0.1 }, 
+        "-=0.6"
+      )
+      .fromTo('.hero__scroll', 
+        { autoAlpha: 0 }, 
+        { autoAlpha: 1, duration: 1 }, 
+        "-=0.5"
+      )
+
+      // Parallax effect on scroll
+      gsap.to('.hero__content', {
+        yPercent: 30,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
+    }, heroRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section id="hero" className="hero" ref={sectionRef}>
+    <section className="hero" ref={heroRef}>
       <ParticleGrid />
+      <div className="container hero__container">
+        <div className="hero__content">
+          <div className="hero__badge glass-panel">
+            <span className="hero__badge-dot" />
+            <span className="hero__badge-text">Yangi Raqamli Davrga Xush Kelibsiz</span>
+          </div>
+          
+          <h1 className="hero__title heading-display">
+            <div className="line"><div className="line-inner">Biznesingizni</div></div>
+            <div className="line"><div className="line-inner"><span className="text-gradient">Kelajakka</span></div></div>
+            <div className="line"><div className="line-inner">Olib Chiqamiz</div></div>
+          </h1>
+          
+          <p className="hero__desc text-secondary">
+            Codexa – ilg'or texnologiyalar, betakror dizayn va ma'lumotlarga asoslangan strategiyalar yordamida korxonangiz uchun raqamli mukammallikni yaratadi.
+          </p>
 
-      <motion.div className="hero__content container" style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}>
-        <motion.div className="hero__content-inner" variants={containerVariants} initial="hidden" animate="visible">
-          <motion.div variants={itemVariants}>
-            <span className="badge"><span className="badge__dot" />Raqamli Agentlik</span>
-          </motion.div>
-
-          <motion.h1 className="heading-hero hero__title" variants={itemVariants}>
-            Biznesingizni{' '}
-            <span className="text-gradient">Raqamlashtiruvchi</span>{' '}
-            Yechimlar.
-          </motion.h1>
-
-          <motion.p className="hero__subtitle" variants={itemVariants}>
-            Restoranlardan ta'lim markazlarigacha, ustaxonalardan korporativ kompaniyalargacha —
-            <BrandName /> veb-saytlar, avtomatlashtirish, CRM tizimlar va sun'iy intellekt yechimlarini yaratadi.
-          </motion.p>
-
-          <motion.div className="hero__actions" variants={itemVariants}>
-            <a href="#contact" className="btn btn--primary">
+          <div className="hero__actions">
+            <MagneticButton className="btn btn--primary">
               Loyihani Boshlash
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-            <a href="#portfolio" className="btn btn--secondary">Ishlarimizni Ko'rish</a>
-          </motion.div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </MagneticButton>
+            <MagneticButton className="btn btn--secondary">
+              Bizning Ishlar
+            </MagneticButton>
+          </div>
 
-          <motion.div className="hero__stats" variants={itemVariants}>
-            <div className="hero__stat">
-              <span className="hero__stat-number text-gradient">100+</span>
-              <span className="hero__stat-label">Bajarilgan Loyihalar</span>
+          <div className="hero__stats">
+            <div className="hero__stats-item">
+              <span className="hero__stats-num">200+</span>
+              <span className="hero__stats-label">Muvaffaqiyatli<br/>Loyihalar</span>
             </div>
-            <div className="hero__stat-divider" />
-            <div className="hero__stat">
-              <span className="hero__stat-number text-gradient">10+</span>
-              <span className="hero__stat-label">Xizmat Ko'rsatilgan Sohalar</span>
+            <div className="hero__stats-divider" />
+            <div className="hero__stats-item">
+              <span className="hero__stats-num">98%</span>
+              <span className="hero__stats-label">Mijozlar<br/>Qoniqishi</span>
             </div>
-            <div className="hero__stat-divider" />
-            <div className="hero__stat">
-              <span className="hero__stat-number text-gradient">98%</span>
-              <span className="hero__stat-label">Mijozlar Mamnuniyati</span>
+            <div className="hero__stats-divider" />
+            <div className="hero__stats-item">
+              <span className="hero__stats-num">5+</span>
+              <span className="hero__stats-label">Yillik<br/>Tajriba</span>
             </div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
 
-      <motion.div className="hero__scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.5, duration: 1 }} style={{ opacity: heroOpacity }}>
-        <motion.div className="hero__scroll-line" animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }} />
-        <span>Pastga</span>
-      </motion.div>
+      <div className="hero__scroll">
+        <span className="hero__scroll-text">PASTGA</span>
+        <div className="hero__scroll-line" />
+      </div>
     </section>
   )
 }
-

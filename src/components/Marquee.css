@@ -1,0 +1,39 @@
+.marquee-section {
+  padding: var(--space-4xl) 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  background: linear-gradient(to bottom, transparent, rgba(0, 229, 255, 0.03), transparent);
+}
+
+.parallax {
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 0.8;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax .scroller {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  font-size: clamp(3rem, 8vw, 6rem);
+  display: flex;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+.parallax:nth-child(2) .scroller {
+  -webkit-text-stroke: 1px rgba(0, 229, 255, 0.2);
+}
+
+.parallax .scroller span {
+  display: block;
+  margin-right: 30px;
+}

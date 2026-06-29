@@ -14,6 +14,8 @@ import Testimonials from './components/Testimonials'
 import Numbers from './components/Numbers'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
+import CustomCursor from './components/CustomCursor'
+import Marquee from './components/Marquee'
 import MouseBackground from './components/MouseBackground'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -80,10 +82,12 @@ export default function App() {
       {!loaded && <Loader onComplete={handleLoadComplete} />}
       {loaded && (
         <>
+          <CustomCursor />
           <MouseBackground />
           <Navbar />
           <main>
             <Hero />
+            <Marquee />
             <BusinessShowcase />
             <Process />
             <Comparison />
