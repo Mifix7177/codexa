@@ -8,7 +8,7 @@ export default function MouseBackground() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { alpha: false }) // Optimize and remove alpha channel to reduce banding
     let w, h
 
     const resize = () => {
@@ -27,39 +27,42 @@ export default function MouseBackground() {
     }
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
-    // Create liquid orbs
+    // Create liquid orbs using RGBA values for smooth gradients
     const orbs = [
-      { x: 0.2, y: 0.3, radius: 0.4, color: 'rgba(255, 255, 255, 0.06)' }, // Chrome/Silver
-      { x: 0.8, y: 0.7, radius: 0.35, color: 'rgba(255, 255, 255, 0.04)' }, // Chrome
-      { x: 0.5, y: 0.5, radius: 0.45, color: 'rgba(0, 0, 0, 1)' }, // Black core
-      { x: 0.7, y: 0.2, radius: 0.25, color: 'rgba(0, 229, 255, 0.1)' }, // Icy Blue
-      { x: 0.3, y: 0.8, radius: 0.4, color: 'rgba(10, 10, 10, 1)' } // Charcoal
+      { x: 0.2, y: 0.3, radius: 0.6, r: 255, g: 255, b: 255, a: 0.05 }, // Chrome/Silver
+      { x: 0.8, y: 0.7, radius: 0.55, r: 255, g: 255, b: 255, a: 0.04 }, // Chrome
+      { x: 0.5, y: 0.5, radius: 0.65, r: 0, g: 0, b: 0, a: 0.8 }, // Black core
+      { x: 0.7, y: 0.2, radius: 0.45, r: 0, g: 229, b: 255, a: 0.06 }, // Icy Blue
+      { x: 0.3, y: 0.8, radius: 0.6, r: 10, g: 10, b: 10, a: 0.8 } // Charcoal
     ]
 
     let time = 0;
 
     const draw = () => {
-      ctx.clearRect(0, 0, w, h)
-      ctx.fillStyle = '#050505' // Base charcoal
+      // Base background
+      ctx.fillStyle = '#050505'
       ctx.fillRect(0, 0, w, h)
+
+      // Additive blending for glows
+      ctx.globalCompositeOperation = 'screen'
 
       time += 0.002;
 
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
 
-      // Update and draw orbs
+      // Draw orbs
       for (let i = 0; i < orbs.length; i++) {
         const orb = orbs[i]
         
-        // Add subtle sine wave movement
+        // Sine wave movement
         const offsetX = Math.sin(time + i * 15) * w * 0.15
         const offsetY = Math.cos(time + i * 15) * h * 0.15
         
         let targetX = w * orb.x + offsetX
         let targetY = h * orb.y + offsetY
 
-        // Very subtle mouse reaction
+        // Mouse reaction
         if (mx > -500) {
            const dx = mx - targetX
            const dy = my - targetY
@@ -70,13 +73,21 @@ export default function MouseBackground() {
            }
         }
 
+        const radius = w * orb.radius
+        
         ctx.beginPath()
-        ctx.fillStyle = orb.color
-        ctx.arc(targetX, targetY, w * orb.radius, 0, Math.PI * 2)
+        const grad = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, radius)
+        grad.addColorStop(0, `rgba(${orb.r}, ${orb.g}, ${orb.b}, ${orb.a})`)
+        grad.addColorStop(1, `rgba(${orb.r}, ${orb.g}, ${orb.b}, 0)`)
+        
+        ctx.fillStyle = grad
+        ctx.arc(targetX, targetY, radius, 0, Math.PI * 2)
         ctx.fill()
       }
+      
+      ctx.globalCompositeOperation = 'source-over'
 
-      // Update glass-card local coordinates for border glow
+      // Update glass-card local coordinates
       const cards = document.querySelectorAll('.glass-card')
       for (let i = 0; i < cards.length; i++) {
         const rect = cards[i].getBoundingClientRect()

@@ -21,9 +21,15 @@
   50% { opacity: 0.7; }
 }
 
-/* Grid overlay removed for smooth background */
+/* Grid overlay — mask controlled by mouse via Framer Motion */
 .hero__grid {
-  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
 }
 
 
