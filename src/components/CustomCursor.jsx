@@ -72,14 +72,12 @@ export default function CustomCursor() {
           xmlns="http://www.w3.org/2000/svg"
           style={{
             filter: isHovering ? "drop-shadow(0 0 12px rgba(0, 229, 255, 0.9))" : "drop-shadow(0 0 8px rgba(0, 229, 255, 0.6))",
-            transition: 'filter 0.3s ease',
-            transform: "rotate(-20deg)",
-            transformOrigin: "4px 4px"
+            transition: 'filter 0.3s ease'
           }}
         >
-          {/* Main filled shape */}
+          {/* Main filled shape matching default Windows cursor angle */}
           <path 
-            d="M4 4 L34 14 L18 18 L14 34 Z" 
+            d="M4 4 L4 34 L15 23 L28 23 Z" 
             fill="rgba(0, 60, 80, 0.85)" 
             stroke="rgba(0, 229, 255, 0.9)" 
             strokeWidth="1.5" 
@@ -88,19 +86,19 @@ export default function CustomCursor() {
           
           {/* Internal constellation / 3D lines */}
           <path 
-            d="M4 4 L14 14 L34 14 M14 14 L18 18 M14 14 L14 34" 
+            d="M4 4 L12 18 L4 34 M12 18 L15 23 M12 18 L28 23" 
             stroke="rgba(0, 229, 255, 0.5)" 
             strokeWidth="1" 
           />
           
           {/* Glowing nodes at vertices */}
           <circle cx="4" cy="4" r="2.5" fill="#fff" />
-          <circle cx="34" cy="14" r="2" fill="#fff" />
-          <circle cx="18" cy="18" r="1.5" fill="#fff" />
-          <circle cx="14" cy="34" r="2" fill="#fff" />
+          <circle cx="4" cy="34" r="2" fill="#fff" />
+          <circle cx="15" cy="23" r="1.5" fill="#fff" />
+          <circle cx="28" cy="23" r="2" fill="#fff" />
           
           {/* Center geometry node */}
-          <circle cx="14" cy="14" r="2.5" fill="#fff" />
+          <circle cx="12" cy="18" r="2.5" fill="#fff" />
         </svg>
       </motion.div>
     </>
