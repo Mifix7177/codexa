@@ -1,41 +1,23 @@
-import { useRef, useCallback } from 'react'
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { BrandName } from './Logo'
+import ParticleGrid from './ParticleGrid'
 import './Hero.css'
 
 export default function Hero() {
   const sectionRef = useRef(null)
-  const mouseX = useMotionValue(-1000)
-  const mouseY = useMotionValue(-1000)
-  
-  const springConfig = { damping: 25, stiffness: 200 }
-  const smoothX = useSpring(mouseX, springConfig)
-  const smoothY = useSpring(mouseY, springConfig)
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 200])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9])
 
-  const handleMouseMove = useCallback((e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    mouseX.set(e.clientX - rect.left)
-    mouseY.set(e.clientY - rect.top)
-  }, [mouseX, mouseY])
-
-  const maskImage = useMotionTemplate`radial-gradient(500px circle at ${smoothX}px ${smoothY}px, black 0%, transparent 100%)`
-
   const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 2.5 } } }
   const itemVariants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } } }
 
   return (
-    <section id="hero" className="hero" ref={sectionRef} onMouseMove={handleMouseMove}>
-      <div className="hero__gradient" aria-hidden="true" />
-      <motion.div 
-        className="hero__grid" 
-        aria-hidden="true" 
-        style={{ WebkitMaskImage: maskImage, maskImage: maskImage }}
-      />
+    <section id="hero" className="hero" ref={sectionRef}>
+      <ParticleGrid />
 
       <motion.div className="hero__content container" style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}>
         <motion.div className="hero__content-inner" variants={containerVariants} initial="hidden" animate="visible">
