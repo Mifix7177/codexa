@@ -67,45 +67,47 @@ export default function Hero() {
       <ParticleGrid />
       <div className="container hero__container">
         <div className="hero__content">
-          <div className="hero__badge glass-panel">
-            <span className="hero__badge-dot" />
-            <span className="hero__badge-text">Yangi Raqamli Davrga Xush Kelibsiz</span>
-          </div>
-          
-          <h1 className="hero__title heading-display">
-            <div className="line"><div className="line-inner">Biznesingizni</div></div>
-            <div className="line"><div className="line-inner"><span className="text-gradient">Kelajakka</span></div></div>
-            <div className="line"><div className="line-inner">Olib Chiqamiz</div></div>
-          </h1>
-          
-          <p className="hero__desc text-secondary">
-            Codexa – ilg'or texnologiyalar, betakror dizayn va ma'lumotlarga asoslangan strategiyalar yordamida korxonangiz uchun raqamli mukammallikni yaratadi.
-          </p>
-
-          <div className="hero__actions">
-            <MagneticButton className="btn btn--primary">
-              Loyihani Boshlash
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </MagneticButton>
-            <MagneticButton className="btn btn--secondary">
-              Bizning Ishlar
-            </MagneticButton>
-          </div>
-
-          <div className="hero__stats">
-            <div className="hero__stats-item">
-              <span className="hero__stats-num">200+</span>
-              <span className="hero__stats-label">Muvaffaqiyatli<br/>Loyihalar</span>
+          <div className="hero__content-inner">
+            <div className="hero__badge glass-panel">
+              <span className="hero__badge-dot" />
+              <span className="hero__badge-text">Yangi Raqamli Davrga Xush Kelibsiz</span>
             </div>
-            <div className="hero__stats-divider" />
-            <div className="hero__stats-item">
-              <span className="hero__stats-num">98%</span>
-              <span className="hero__stats-label">Mijozlar<br/>Qoniqishi</span>
+            
+            <h1 className="hero__title heading-display">
+              <div className="line"><div className="line-inner">Biznesingizni</div></div>
+              <div className="line"><div className="line-inner"><span className="text-gradient">Kelajakka</span></div></div>
+              <div className="line"><div className="line-inner">Olib Chiqamiz</div></div>
+            </h1>
+            
+            <p className="hero__desc text-secondary">
+              Codexa – ilg'or texnologiyalar, betakror dizayn va ma'lumotlarga asoslangan strategiyalar yordamida korxonangiz uchun raqamli mukammallikni yaratadi.
+            </p>
+
+            <div className="hero__actions">
+              <MagneticButton className="btn btn--primary">
+                Loyihani Boshlash
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </MagneticButton>
+              <MagneticButton className="btn btn--secondary">
+                Bizning Ishlar
+              </MagneticButton>
             </div>
-            <div className="hero__stats-divider" />
-            <div className="hero__stats-item">
-              <span className="hero__stats-num">5+</span>
-              <span className="hero__stats-label">Yillik<br/>Tajriba</span>
+
+            <div className="hero__stats">
+              <div className="hero__stats-item">
+                <span className="hero__stats-num">200+</span>
+                <span className="hero__stats-label">Muvaffaqiyatli<br/>Loyihalar</span>
+              </div>
+              <div className="hero__stats-divider" />
+              <div className="hero__stats-item">
+                <span className="hero__stats-num">98%</span>
+                <span className="hero__stats-label">Mijozlar<br/>Qoniqishi</span>
+              </div>
+              <div className="hero__stats-divider" />
+              <div className="hero__stats-item">
+                <span className="hero__stats-num">5+</span>
+                <span className="hero__stats-label">Yillik<br/>Tajriba</span>
+              </div>
             </div>
           </div>
         </div>
