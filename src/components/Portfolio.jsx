@@ -7,10 +7,10 @@ import './Portfolio.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const projects = [
-  { title: 'GastroHub', category: 'Restoran', desc: "To'liq raqamli ekotizim — onlayn buyurtma, stollarni band qilish, sodiqlik dasturi va oshxonani boshqarish paneli.", tags: ['Web App', 'Mobile', 'CRM'], color: '#f97316', gradient: 'linear-gradient(135deg, #f97316, #ea580c)' },
+  { title: 'Restoxa', category: 'Restoran', desc: "To'liq raqamli ekotizim — onlayn buyurtma, stollarni band qilish, sodiqlik dasturi va oshxonani boshqarish paneli.", tags: ['Web App', 'Mobile', 'CRM'], color: '#f97316', gradient: 'linear-gradient(135deg, #000000, #000000)' },
   { title: 'MedConnect', category: "Sog'liqni saqlash", desc: 'Qabulni rejalashtirish, telemeditsina, elektron sog\'liqni saqlash yozuvlari va tahlillariga ega bemorlarni boshqarish platformasi.', tags: ['Platform', 'AI', 'HIPAA'], color: '#06b6d4', gradient: 'linear-gradient(135deg, #06b6d4, #0891b2)' },
-  { title: 'EduFlow', category: "Ta'lim", desc: "Kurs yaratuvchisi, muvaffaqiyatni kuzatish, virtual sinflar va talabalar tahliliga ega o'quvni boshqarish tizimi.", tags: ['LMS', 'Mobile', 'Analytics'], color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' },
-  { title: 'BuildPro', category: 'Qurilish', desc: 'Resurslarni taqsimlash, vaqt jadvalini kuzatish, byudjetni boshqarish va haqiqiy vaqtda hisobot berish kabi loyihalarni boshqarish to\'plami.', tags: ['ERP', 'Dashboard', 'Automation'], color: '#f59e0b', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+  { title: 'Eduxa', category: "Ta'lim", desc: "O'quv markazini zamonaviy boshqarish tizimi. Qabul, CRM, ERP, davomat, to'lovlar, Telegram bot va hisobotlarni bitta platformada birlashtiradi.", tags: ['CRM', 'ERP', 'Telegram Bot'], color: '#9D00FF', gradient: 'linear-gradient(135deg, #000000, #000000)' },
+  { title: 'Autoxa', category: 'Avto Servis', desc: 'Avto servislar uchun navbat tizimi.', tags: ['CRM', 'Queue', 'Dashboard'], color: '#f59e0b', gradient: 'linear-gradient(135deg, #000000, #000000)' },
   { title: 'StyleStudio', category: "Go'zallik", desc: 'Onlayn band qilish, mijozlar profillari, inventarni boshqarish va avtomatlashtirilgan marketing kampaniyalari bilan salon boshqaruvi.', tags: ['Booking', 'CRM', 'Marketing'], color: '#ec4899', gradient: 'linear-gradient(135deg, #ec4899, #db2777)' },
   { title: 'LogiTrack', category: 'Logistika', desc: 'Haqiqiy vaqtda kuzatish, marshrutni optimallashtirish va avtomatlashtirilgan jo\'natishga ega parklarni boshqarish va logistika platformasi.', tags: ['IoT', 'AI', 'Mobile'], color: '#14b8a6', gradient: 'linear-gradient(135deg, #14b8a6, #0d9488)' },
 ]
@@ -63,18 +63,24 @@ export default function Portfolio() {
             {filtered.map((project, i) => (
               <motion.article key={project.title} className="port__card glass-card" layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} onMouseEnter={() => setHoveredIdx(i)} onMouseLeave={() => setHoveredIdx(null)}>
                 <div className="port__card-preview" style={{ background: project.gradient }}>
-                  <div className="port__card-mockup">
-                    <div className="port__card-mockup-bar"><span /><span /><span /></div>
-                    <div className="port__card-mockup-content">
-                      <div className="port__card-mockup-sidebar" />
-                      <div className="port__card-mockup-main">
-                        <div className="port__card-mockup-line" style={{ width: '70%' }} />
-                        <div className="port__card-mockup-line" style={{ width: '50%' }} />
-                        <div className="port__card-mockup-line" style={{ width: '85%' }} />
-                        <div className="port__card-mockup-grid"><div /><div /><div /></div>
+                  {['Eduxa', 'Restoxa', 'Autoxa'].includes(project.title) ? (
+                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: '2rem' }}>
+                      <img src={`/${project.title.toLowerCase()}-logo.png`} alt={`${project.title} Logo`} style={{ width: '85%', height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }} />
+                    </div>
+                  ) : (
+                    <div className="port__card-mockup">
+                      <div className="port__card-mockup-bar"><span /><span /><span /></div>
+                      <div className="port__card-mockup-content">
+                        <div className="port__card-mockup-sidebar" />
+                        <div className="port__card-mockup-main">
+                          <div className="port__card-mockup-line" style={{ width: '70%' }} />
+                          <div className="port__card-mockup-line" style={{ width: '50%' }} />
+                          <div className="port__card-mockup-line" style={{ width: '85%' }} />
+                          <div className="port__card-mockup-grid"><div /><div /><div /></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                   <div className="port__card-reflection" />
                 </div>
                 <div className="port__card-info">

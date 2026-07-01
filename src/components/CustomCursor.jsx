@@ -12,6 +12,7 @@ export default function CustomCursor() {
 
   const [isHovering, setIsHovering] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     // Check if device has a fine pointer (mouse)
@@ -23,6 +24,7 @@ export default function CustomCursor() {
     const updateMousePosition = (e) => {
       cursorX.set(e.clientX)
       cursorY.set(e.clientY)
+      setIsVisible(true)
     }
 
     const handleMouseOver = (e) => {
@@ -38,12 +40,19 @@ export default function CustomCursor() {
       }
     }
 
+    const handleMouseLeave = () => setIsVisible(false)
+    const handleMouseEnter = () => setIsVisible(true)
+
     window.addEventListener('mousemove', updateMousePosition, { passive: true })
     window.addEventListener('mouseover', handleMouseOver, { passive: true })
+    document.addEventListener('mouseleave', handleMouseLeave)
+    document.addEventListener('mouseenter', handleMouseEnter)
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition)
       window.removeEventListener('mouseover', handleMouseOver)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      document.removeEventListener('mouseenter', handleMouseEnter)
     }
   }, [cursorX, cursorY])
 
@@ -61,7 +70,8 @@ export default function CustomCursor() {
           translateY: "-4px"
         }}
         animate={{
-          scale: isHovering ? 0 : 1
+          scale: isHovering ? 0 : 1,
+          opacity: isVisible ? 1 : 0
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
       />
@@ -76,6 +86,7 @@ export default function CustomCursor() {
         }}
         animate={{
           scale: isHovering ? 1.3 : 1,
+          opacity: isVisible ? 1 : 0
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}
       >
